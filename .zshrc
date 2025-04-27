@@ -80,50 +80,57 @@ EOF
 alias gcai="git_ai_commit"
 
 function gprai() {
-    # Get current branch name
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-    
-    # Get base branch (assuming main/master)
-    base_branch="main"
-    if ! git rev-parse --verify main >/dev/null 2>&1; then
-        base_branch="master"
-    fi
-    
-    # Get all changes between base branch and current branch
-    branch_diff=$(git diff $base_branch...$current_branch)
-    changed_files=$(git diff --name-only $base_branch...$current_branch)
-    
-    # Get all commits in this branch
-    commit_messages=$(git log $base_branch..$current_branch --pretty=format:"%s")
-    
-    pr_prompt=$(cat << EOF
-Generate a PR title and description based on these changes. Try to make the PR title indicative of all changes
-For the PR title, use semantic versioning format: type(scope): description
+  local current_branch base_ref branch_diff changed_files pr_prompt pr_content
+
+  # 1) figure out current branch
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+  # 2) pick the main ref (prefer origin/main, fall back to local main)
+  if git show-ref --verify --quiet refs/remotes/origin/main; then
+    base_ref=origin/main
+  elif git show-ref --verify --quiet refs/heads/main; then
+    base_ref=main
+  else
+    echo "Error: 'main' branch not found locally or on origin."
+    return 1
+  fi
+
+  # 3) get diff + file list
+  branch_diff=$(git diff "$base_ref...$current_branch")
+  changed_files=$(git diff --name-only "$base_ref...$current_branch")
+
+  # 4) build the prompt
+  pr_prompt=$(cat <<EOF
+Generate a PR title and description based on these changes.
+Use semantic format: type(scope): description
 Common types: feat, fix, docs, style, refactor, test, chore
-The changes are in these files:
+
+Files changed:
 $changed_files
-Here are all the commits:
-$commit_messages
-Here are the actual changes:
+
+Diff:
 $branch_diff
-Provide output in exactly this format:
-TITLE: <semantic version title>
+
+Respond *exactly* in this format:
+
+TITLE: <type(scope): concise summary>
 DESCRIPTION:
 ## Overview
-<high level description of the changes>
+<one‐ or two‐sentence high‐level summary>
 ## Changes Made
-<bullet points of specific changes>
-Be concise but descriptive in your response.
+- <bullet points of specific changes>
 EOF
-)
-    # Generate PR content using cgpt
-    pr_content=$(cgpt --no-history << EOF 2>/dev/null
+  )
+
+  # 5) call cgpt
+  pr_content=$(cgpt --no-history <<EOF
 $pr_prompt
 EOF
-)
-    echo "$pr_content"
-}
+  )
 
+  # 6) output only the AI response
+  printf "%s\n" "$pr_content"
+}
 
 . "$HOME/.local/bin/env"
 

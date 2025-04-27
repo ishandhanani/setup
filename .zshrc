@@ -12,7 +12,10 @@ PS1='%F{magenta}ishan-mbp%f:%F{cyan}%~%f ${vcs_info_msg_0_}%F{green}$%f '
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 
-#go bin
+# vim 
+alias v="vim ."
+
+# go bin
 export PATH=$PATH:~/go/bin
 
 # git aliases

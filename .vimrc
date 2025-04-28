@@ -30,6 +30,10 @@ let g:ale_set_highlights = 1               " This is already set correctly
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
+" Python linting and fixing
+let g:ale_linters = { "python": ["ruff"] }
+let g:ale_fixers = { "python": ["ruff", "ruff_format"] }
+
 " My VSCode bindings
 nnoremap gr :ALEFindReferences<CR>
 nnoremap gn :ALERename<CR>

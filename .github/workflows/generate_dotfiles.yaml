@@ -1,0 +1,31 @@
+name: Generate Dotfiles
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
+  push:
+    branches:
+      - main # Or your default branch
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate dotfiles
+        run: bash scripts/generate_dotfiles.sh
+
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add generated_dotfiles/
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit in generated_dotfiles."
+          else
+            git commit -m "Automated: Generate dotfiles"
+            git push
+          fi

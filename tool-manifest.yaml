@@ -1,0 +1,44 @@
+tools:
+  - name: "yq"
+    description: "A lightweight and portable command-line YAML processor."
+    macos:
+      enabled: true
+      check_command: "command -v yq"
+      install_command: "brew install yq"
+    linux:
+      enabled: true
+      check_command: "command -v yq"
+      install_command: "sudo apt install -y yq"
+
+  - name: "bat"
+    description: "A cat(1) clone with syntax highlighting and Git integration."
+    macos:
+      enabled: true
+      check_command: "command -v bat"
+      install_command: "brew install bat"
+    linux:
+      enabled: true
+      check_command: "command -v bat"
+      install_command: "sudo apt install -y bat"
+
+  - name: "uv"
+    description: "An extremely fast Python package installer and resolver, written in Rust."
+    macos:
+      enabled: true
+      check_command: "command -v uv"
+      install_command: "curl -LsSf https://astral.sh/uv/install.sh | sh"
+    linux:
+      enabled: true
+      check_command: "command -v uv"
+      install_command: "curl -LsSf https://astral.sh/uv/install.sh | sh"
+
+  - name: "ruff"
+    description: "An extremely fast Python package installer and resolver, written in Rust."
+    macos:
+      enabled: true
+      check_command: "command -v ruff"
+      install_command: "brew install ruff"
+    linux:
+      enabled: true
+      check_command: "command -v ruff"
+      install_command: "curl -LsSf https://astral.sh/ruff/install.sh | sh"

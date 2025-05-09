@@ -45,7 +45,7 @@ alias speed="speedtest"
 alias cat="bat --style=plain"
 
 # eza
-alias ls='eza --icons --color=always --group-directories-first'
-alias ll='eza -lh --icons --color=always --git --group-directories-first'
-alias la='eza -la --icons --color=always --git --group-directories-first' # All files
-alias ltree='eza --tree --level=3 --icons --color=always' # Tree view
+alias ls='eza --color=always --group-directories-first'
+alias ll='eza -lh --color=always --git --group-directories-first'
+alias la='eza -la --color=always --git --group-directories-first' # All files
+alias ltree='eza --tree --level=3 --color=always' # Tree view

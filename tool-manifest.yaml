@@ -18,8 +18,8 @@ tools:
       install_command: "brew install bat"
     linux:
       enabled: true
-      check_command: "command -v bat"
-      install_command: "sudo apt install -y bat"
+      check_command: "command -v batcat"
+      install_command: "sudo apt install -y bat && mkdir -p ~/.local/bin && ln -s /usr/bin/batcat ~/.local/bin/bat"
 
   - name: "uv"
     description: "An extremely fast Python package installer and resolver, written in Rust."

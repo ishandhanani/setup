@@ -64,6 +64,12 @@ process_manifest_for_os() {
                     echo "Error: Failed to install $tool_name." >&2
                 fi
             fi
+
+            post_install_cmd=$(yq e ".tools[$i].${os_id}.post_install_command" "$MANIFEST_FILE")
+            if [ -n "$post_install_cmd" ]; then
+                echo "Running post-install command for $tool_name on $os_id..."
+                eval "$post_install_cmd"
+            fi
         else
             echo "Skipping $tool_name (not enabled for $os_id)."
         fi

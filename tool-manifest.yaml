@@ -60,6 +60,17 @@ tools:
       enabled: true
       check_command: "command -v eza"
       install_command: "brew install eza"
+      post_install_command: |
+        EZA_TARGET_DIR="$HOME/Library/Application Support/eza"
+        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/eza_theme.yaml"
+        TARGET_THEME_FILE="theme.yaml"
+        echo "Running eza post-install for macOS: Setting up theme..."
+        mkdir -p "$EZA_TARGET_DIR"
+        if curl -sSL "$GENERATED_THEME_URL" -o "$EZA_TARGET_DIR/$TARGET_THEME_FILE"; then
+            echo "Eza theme successfully configured for macOS."
+        else
+            echo "Warning: Failed to download or configure eza theme for macOS." >&2
+        fi
     linux:
       enabled: true
       check_command: "command -v eza"
@@ -72,3 +83,14 @@ tools:
         sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
         sudo apt update
         sudo apt install -y eza
+      post_install_command: |
+        EZA_TARGET_DIR="$HOME/.config/eza"
+        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/eza_theme.yaml"
+        TARGET_THEME_FILE="theme.yaml"
+        echo "Running eza post-install for Linux: Setting up theme..."
+        mkdir -p "$EZA_TARGET_DIR"
+        if curl -sSL "$GENERATED_THEME_URL" -o "$EZA_TARGET_DIR/$TARGET_THEME_FILE"; then
+            echo "Eza theme successfully configured for Linux."
+        else
+            echo "Warning: Failed to download or configure eza theme for Linux." >&2
+        fi

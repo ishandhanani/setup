@@ -12,6 +12,7 @@ COMMON_CONFIG_PATH="$CONFIG_SOURCE_DIR/common_shell_config.sh"
 ZSH_SPECIFIC_CONFIG_PATH="$CONFIG_SOURCE_DIR/zsh_specifics.sh" # Updated path
 BASH_SPECIFIC_CONFIG_PATH="$CONFIG_SOURCE_DIR/bash_specifics.sh" 
 COMMON_VIMRC_PATH="$CONFIG_SOURCE_DIR/common_vimrc"
+EZA_THEME_SOURCE_PATH="$CONFIG_SOURCE_DIR/eza_gruvbox_dark_theme.yaml" # New source
 GENERATED_DIR="$REPO_ROOT/generated_dotfiles"
 
 # Ensure common_shell_config.sh exists
@@ -38,10 +39,17 @@ if [ ! -f "$COMMON_VIMRC_PATH" ]; then
     exit 1
 fi
 
+# Ensure eza_gruvbox_dark_theme.yaml exists
+if [ ! -f "$EZA_THEME_SOURCE_PATH" ]; then
+    echo "Error: Eza theme source not found at $EZA_THEME_SOURCE_PATH" >&2
+    exit 1
+fi
+
 COMMON_CONFIG_CONTENT=$(cat "$COMMON_CONFIG_PATH")
 ZSH_SPECIFIC_CONTENT=$(cat "$ZSH_SPECIFIC_CONFIG_PATH")
 BASH_SPECIFIC_CONTENT=$(cat "$BASH_SPECIFIC_CONFIG_PATH")
 COMMON_VIMRC_CONTENT=$(cat "$COMMON_VIMRC_PATH")
+EZA_THEME_CONTENT=$(cat "$EZA_THEME_SOURCE_PATH") # Read eza theme
 
 # Create generated_dotfiles directory if it doesn't exist
 mkdir -p "$GENERATED_DIR"
@@ -76,5 +84,14 @@ echo "Generating $GENERATED_DIR/.vimrc..."
   echo ""
   echo "$COMMON_VIMRC_CONTENT"
 } > "$GENERATED_DIR/.vimrc"
+
+# Generate eza theme file
+echo "Generating $GENERATED_DIR/eza_theme.yaml..."
+{ 
+  echo "# This file is auto-generated. Do not edit directly."
+  echo "# Generated from common_rc/eza_gruvbox_dark_theme.yaml."
+  echo ""
+  echo "$EZA_THEME_CONTENT"
+} > "$GENERATED_DIR/eza_theme.yaml"
 
 echo "Dotfile generation complete in $GENERATED_DIR" 

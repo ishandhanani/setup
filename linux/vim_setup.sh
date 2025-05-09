@@ -23,15 +23,4 @@ else
     exit 1
 fi
 
-# Install vim-plug if not already installed
-PLUG_VIM_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
-if [ ! -f "$PLUG_VIM_PATH" ]; then
-    echo "Installing vim-plug..."
-    curl -fLo "$PLUG_VIM_PATH" --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    echo "vim-plug installed."
-else
-    echo "vim-plug already installed."
-fi
-
-echo "Vim setup complete! Run 'vim +PlugInstall +qall' to install plugins." 
+echo "Vim setup complete!" 

@@ -42,3 +42,14 @@ tools:
       enabled: true
       check_command: "command -v ruff"
       install_command: "curl -LsSf https://astral.sh/ruff/install.sh | sh"
+
+  - name: "vim-plug"
+    description: "A plugin manager for Vim."
+    macos:
+      enabled: true
+      check_command: "echo TODO"
+      install_command: "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    linux:
+      enabled: true
+      check_command: "echo TODO"
+      install_command: "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"

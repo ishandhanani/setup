@@ -21,11 +21,12 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git checkout dotfiles-latest
           git add generated_dotfiles/
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit in generated_dotfiles."
           else
             git commit -m "Automated: Generate dotfiles"
-            git push
+            git push -f
           fi

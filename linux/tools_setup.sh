@@ -2,22 +2,14 @@
 
 bootstrap_yq_linux() {
     if ! command -v yq &> /dev/null; then
-        echo "yq not found. Attempting to install yq via apt (bootstrap)..."
-        # Run apt update only if needed, could be done by a higher level script too
-        # For a self-contained script, it's safer to include it.
-        if command -v apt-get &> /dev/null; then
-            sudo apt-get update 
-            sudo apt-get install -y yq
-        else
-            echo "Error: apt-get not found. Cannot bootstrap yq automatically." >&2
-            echo "Please install yq manually and re-run the script." >&2
-            exit 1
-        fi
+        echo "yq not found. Attempting to install yq via wget..."
+        sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq && \
+        sudo chmod +x /usr/local/bin/yq
         if ! command -v yq &> /dev/null; then
             echo "Error: Failed to bootstrap yq. Please install yq manually." >&2
             exit 1
         fi
-        echo "yq bootstrapped successfully via apt."
+        echo "yq bootstrapped successfully via wget."
     else
         echo "yq already available."
     fi

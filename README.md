@@ -15,7 +15,7 @@ Quickly set up a new macOS or Linux (Ubuntu) development environment with essent
 2.  **Automated Shell, Vim & Tools Setup**:
     - **Zsh Shell**:
       ```bash
-      curl -sSL https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/.zshrc -o ~/.zshrc && echo "Zsh config installed. Source it or open a new terminal."
+      curl -sSL https://raw.githubusercontent.com/ishandhanani/setup/main/generated_dotfiles/.zshrc -o ~/.zshrc && echo "Zsh config installed. Source it or open a new terminal."
       ```
     - **Vim**:
       ```bash

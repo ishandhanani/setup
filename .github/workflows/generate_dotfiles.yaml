@@ -27,6 +27,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit in generated_dotfiles."
           else
-            git commit -m "Automated: Generate dotfiles"
-            git push -f
+            MAIN_SHA=$(git rev-parse --short main)
+            git commit -m "Automated: Generate dotfiles (main: ${MAIN_SHA})"
+            git push
           fi

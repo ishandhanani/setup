@@ -94,3 +94,14 @@ tools:
         else
             echo "Warning: Failed to download or configure eza theme for Linux." >&2
         fi
+
+  - name: "ripgrep"
+    description: "tuff rust based grep"
+    macos:
+      enabled: true
+      check_command: "command -v rg"
+      install_command: "brew install ripgrep"
+    linux:
+      enabled: true
+      check_command: "command -v rg"
+      install_command: "sudo apt install -y ripgrep"

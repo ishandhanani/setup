@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# Linux specific tool setup
+
+# Minimal bootstrap function to ensure yq is available on Linux (Ubuntu)
 bootstrap_yq_linux() {
     if ! command -v yq &> /dev/null; then
-        echo "yq not found. Attempting to install yq via wget..."
+        echo "yq not found. Attempting to install yq via wget (bootstrap)..."
+        # Ensure wget is available or add it to manifest / bootstrap it too if necessary
         sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq && \
         sudo chmod +x /usr/local/bin/yq
         if ! command -v yq &> /dev/null; then
@@ -15,81 +19,35 @@ bootstrap_yq_linux() {
     fi
 }
 
-# Git Configuration
-setup_git() {
-    echo "Checking Git configuration..."
-    current_name=$(git config --global user.name)
-    current_email=$(git config --global user.email)
-    
-    if [[ "$current_name" != "ishandhanani" || "$current_email" != "ishandhanani@gmail.com" ]]; then
-        echo "Setting up Git configuration..."
-        git config --global user.name "ishandhanani"
-        git config --global user.email "ishandhanani@gmail.com"
-        echo "Git config set successfully!"
-        echo "Please set GPG key to enable signed commits"
-    else
-        echo "Git already configured correctly."
-    fi
-}
+# Source the common tool processor script
+# Determine script_dir robustly
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+COMMON_TOOL_PROCESSOR_PATH="$script_dir/../shared/common_tool_processor.sh"
 
-# Main tool installation logic using the manifest
-install_tools_from_manifest() {
-    MANIFEST_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/tool-manifest.yaml"
-    MANIFEST_FILE="/tmp/tool-manifest.yaml"
-
-    echo "Downloading tool manifest from $MANIFEST_URL..."
-    if ! curl -sSL "$MANIFEST_URL" -o "$MANIFEST_FILE"; then
-        echo "Error: Failed to download tool-manifest.yaml." >&2
+if [ -f "$COMMON_TOOL_PROCESSOR_PATH" ]; then
+    # shellcheck source=../shared/common_tool_processor.sh
+    source "$COMMON_TOOL_PROCESSOR_PATH"
+else
+    echo "Error: Common tool processor not found at $COMMON_TOOL_PROCESSOR_PATH" >&2
+    echo "Attempting to download common_tool_processor.sh from repository..."
+    COMMON_PROCESSOR_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/shared/common_tool_processor.sh"
+    TEMP_COMMON_PROCESSOR="/tmp/common_tool_processor.sh"
+    if curl -sSL "$COMMON_PROCESSOR_URL" -o "$TEMP_COMMON_PROCESSOR"; then
+        source "$TEMP_COMMON_PROCESSOR"
+        rm "$TEMP_COMMON_PROCESSOR"
+    else 
+        echo "Failed to download common_tool_processor.sh. Exiting." >&2
         exit 1
     fi
+fi
 
-    echo "Processing tools from manifest for Linux..."
-    
-    # Get the number of tools
-    num_tools=$(yq e '.tools | length' "$MANIFEST_FILE")
-
-    for i in $(seq 0 $(($num_tools - 1))); do
-        tool_name=$(yq e ".tools[$i].name" "$MANIFEST_FILE")
-        is_linux_enabled=$(yq e ".tools[$i].linux.enabled" "$MANIFEST_FILE")
-
-        if [ "$is_linux_enabled" == "true" ]; then
-            echo "--- Processing tool: $tool_name ---"
-            check_cmd=$(yq e ".tools[$i].linux.check_command" "$MANIFEST_FILE")
-            install_cmd=$(yq e ".tools[$i].linux.install_command" "$MANIFEST_FILE")
-
-            if [ -z "$check_cmd" ] || [ -z "$install_cmd" ]; then
-                echo "Warning: Incomplete configuration for $tool_name on Linux. Skipping." >&2
-                continue
-            fi
-
-            echo "Checking if $tool_name is installed (using: $check_cmd)..."
-            if eval "$check_cmd" &> /dev/null; then
-                echo "$tool_name is already installed."
-            else
-                echo "$tool_name not found. Attempting to install (using: $install_cmd)..."
-                if eval "$install_cmd"; then
-                    echo "$tool_name installed successfully."
-                else
-                    echo "Error: Failed to install $tool_name." >&2
-                    # Optionally, decide if this should be a fatal error for the whole script
-                fi
-            fi
-        else
-            echo "Skipping $tool_name (not enabled for Linux)."
-        fi
-        echo # Newline for readability
-    done
-
-    rm -f "$MANIFEST_FILE"
-}
-
-# Main execution
+# Main execution for Linux
 main() {
     echo "Starting Linux tools setup..."
-    bootstrap_yq_linux # Bootstrap yq first
-    setup_git 
-    install_tools_from_manifest 
+    bootstrap_yq_linux 
+    setup_git # From common_tool_processor.sh
+    process_manifest_for_os "linux" # From common_tool_processor.sh
     echo "Linux tools setup process complete!"
 }
 
-main 
+main "$@" 

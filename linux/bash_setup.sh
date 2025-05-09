@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Download the pre-generated .bashrc file
-GENERATED_BASHRC_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/generated_dotfiles/.bashrc"
+GENERATED_BASHRC_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/.bashrc"
 
 echo "Downloading pre-generated .bashrc from $GENERATED_BASHRC_URL..."
 if curl -sSL "$GENERATED_BASHRC_URL" -o ~/.bashrc; then

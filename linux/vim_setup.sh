@@ -13,7 +13,7 @@ echo "Downloading jellybeans theme..."
 curl -fo ~/.vim/colors/jellybeans.vim https://raw.githubusercontent.com/nanotech/jellybeans.vim/master/colors/jellybeans.vim
 
 # Download pre-generated .vimrc from your repository
-GENERATED_VIMRC_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/generated_dotfiles/.vimrc"
+GENERATED_VIMRC_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/.vimrc"
 echo "Downloading pre-generated .vimrc from $GENERATED_VIMRC_URL..."
 if curl -sSL "$GENERATED_VIMRC_URL" -o ~/.vimrc; then
     echo ".vimrc downloaded and installed successfully."

@@ -62,7 +62,7 @@ tools:
       install_command: "brew install eza"
       post_install_command: |
         EZA_TARGET_DIR="$HOME/Library/Application Support/eza"
-        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/eza_theme.yaml"
+        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/generated_dotfiles/eza_theme.yaml"
         TARGET_THEME_FILE="theme.yaml"
         echo "Running eza post-install for macOS: Setting up theme..."
         mkdir -p "$EZA_TARGET_DIR"
@@ -85,7 +85,7 @@ tools:
         sudo apt install -y eza
       post_install_command: |
         EZA_TARGET_DIR="$HOME/.config/eza"
-        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/dotfiles-latest/generated_dotfiles/eza_theme.yaml"
+        GENERATED_THEME_URL="https://raw.githubusercontent.com/ishandhanani/setup/main/generated_dotfiles/eza_theme.yaml"
         TARGET_THEME_FILE="theme.yaml"
         echo "Running eza post-install for Linux: Setting up theme..."
         mkdir -p "$EZA_TARGET_DIR"

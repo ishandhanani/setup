@@ -43,6 +43,9 @@ export EDITOR='vim'
 export VISUAL='vim'
 export GPG_TTY=$(tty) 
 
+# path
+export PATH=$PATH:$HOME/go/bin
+
 # Git aliases
 alias gpr="git pull --rebase"
 alias ga="git add"
@@ -64,6 +67,10 @@ alias m="make"
 alias c="cursor ."
 alias speed="speedtest"
 alias cat="bat --style=plain"
+
+# ai 
+alias ai="cgpt"
+alias qq="cgpt -no-history"
 
 # eza
 alias ls='eza --color=always --group-directories-first'

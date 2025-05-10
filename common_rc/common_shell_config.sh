@@ -36,6 +36,6 @@ alias qq="cgpt -no-history"
 
 # eza
 alias ls='eza --color=always --group-directories-first'
-alias ll='eza -lh --color=always --git --group-directories-first'
-alias la='eza -la --color=always --git --group-directories-first' # All files
+alias ll='eza -lh --color=always --group-directories-first'
+alias la='eza -la --color=always --group-directories-first' # All files
 alias ltree='eza --tree --level=3 --color=always' # Tree view

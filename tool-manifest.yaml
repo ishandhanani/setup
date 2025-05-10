@@ -112,3 +112,14 @@ tools:
       enabled: true
       check_command: "command -v cgpt"
       install_command: "go install github.com/tmc/cgpt/cmd/cgpt@latest"
+
+  - name: "atuin"
+    description: "cli history"
+    macos:
+      enabled: true
+      check_command: "command -v atuin"
+      install_command: "curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh"
+    linux:
+      enabled: true
+      check_command: "command -v atuin"
+      install_command: "curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh"

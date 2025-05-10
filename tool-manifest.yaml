@@ -105,3 +105,10 @@ tools:
       enabled: true
       check_command: "command -v rg"
       install_command: "sudo apt install -y ripgrep"
+
+  - name: "cgpt"
+    description: "chatgpt in your terminal"
+    macos:
+      enabled: true
+      check_command: "command -v cgpt"
+      install_command: "go install github.com/tmc/cgpt/cmd/cgpt@latest"

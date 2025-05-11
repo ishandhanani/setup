@@ -10,6 +10,20 @@ tools:
       check_command: "command -v yq"
       install_command: "sudo apt install -y yq"
 
+  - name: "bottom"
+    description: "Better htop"
+    macos:
+      enabled: true
+      check_command: "command -v btm"
+      install_command: "brew install bottom"
+
+  - name: "nvtop"
+    description: "better nvidia-smi"
+    linux: 
+      enabled: true
+      check_command: "command -v nvtop"
+      install_command: "sudo apt install nvtop"
+
   - name: "bat"
     description: "A cat(1) clone with syntax highlighting and Git integration."
     macos:

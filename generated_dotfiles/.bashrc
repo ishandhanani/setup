@@ -74,6 +74,8 @@ alias qq="cgpt -no-history"
 
 # eza
 alias ls='eza --color=always --group-directories-first'
-alias ll='eza -lh --color=always --group-directories-first'
-alias la='eza -la --color=always --group-directories-first' # All files
+alias ll='eza -la --color=always --group-directories-first'
 alias ltree='eza --tree --level=3 --color=always' # Tree view
+
+# Display public IP on shell start, in light grey
+printf "\033[38;2;235;219;178m%s\033[0m\n" "$(curl -s icanhazip.com)"

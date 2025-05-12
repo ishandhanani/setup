@@ -72,6 +72,9 @@ alias cat="bat --style=plain"
 alias ai="cgpt"
 alias qq="cgpt -no-history"
 
+# brev
+alias brs="brev refresh && brev ls"
+
 # eza
 alias ls='eza --color=always --group-directories-first'
 alias ll='eza -la --color=always --group-directories-first'

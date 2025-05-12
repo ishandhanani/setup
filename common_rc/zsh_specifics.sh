@@ -1,29 +1,25 @@
-# Zsh PS1 Configuration using Gruvbox Colors
 export ME=$(whoami)
+
+# Gruvbox Dark Colors
+local c_user="#fabd2f"          # Yellow
+local c_at="#928374"            # Dark Gray (for @)
+local c_host="#d3869b"          # Magenta
+local c_colon="#928374"         # Dark Gray (for :)
+local c_path="#83a598"          # Aqua
+local c_git_branch="#b8bb26"    # Green
+local c_prompt_symbol="#fe8019" # Orange
+local c_default_text="#ebdbb2"  # Default Text
 
 # Load vcs_info (for git integration)
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-# Gruvbox Dark Colors
-local c_user="#fabd2f"         # Yellow
-local c_at="#928374"           # Dark Gray (for @)
-local c_host="#d3869b"         # Magenta
-local c_colon="#928374"        # Dark Gray (for :)
-local c_path="#83a598"         # Aqua
-local c_git_branch="#b8bb26"    # Green
-local c_prompt_symbol="#fe8019" # Orange
-local c_default_text="#ebdbb2"  # Default Text
-
 # Define the git part of the prompt (branch name in parentheses)
 zstyle ':vcs_info:git:*' formats " %F{$c_git_branch}(%b)%f"
-# zstyle ':vcs_info:git:*'' actionformats ' %%F{green}(%%b)%%F{red} %%a%%f' # Example with action
-
-# Enable prompt substitution for functions and variables
 setopt PROMPT_SUBST
 
 # PS1 Structure: user@host:path (git_branch) $
-PS1="%F{$c_user}%n%f%F{$c_at}@%f%F{$c_host}%m%f%F{$c_colon}:%f%F{$c_path}%~%f${vcs_info_msg_0_}%F{$c_default_text} %F{$c_prompt_symbol}\$ %f"
+PS1='%F{$c_user}%n%f%F{$c_at}@%f%F{$c_host}%m%f%F{$c_colon}:%f%F{$c_path}%~%f${vcs_info_msg_0_}%F{$c_default_text} %F{$c_prompt_symbol}\$ %f'
 
 # Add colors to ls output (macOS/BSD ls)
 export CLICOLOR=1

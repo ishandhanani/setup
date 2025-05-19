@@ -32,3 +32,17 @@ export PS1="${C_USER}\u${C_AT}@${C_HOST}\h${C_COLON}:${C_PATH}\w${C_RESET} ${C_G
 # Editing rc's
 alias editb="vim ~/.bashrc"
 alias sourceb="source ~/.bashrc"
+
+alias sq="squeue --me"
+
+sr() {
+    if [ $# -ne 2 ]; then
+        echo "Usage: sr <jobid> <node_name>"
+        return 1
+    fi
+
+    local jobid="$1"
+    local node_name="$2"
+
+    srun --jobid "$jobid" --overlap -w "$node_name" --pty /bin/bash
+}

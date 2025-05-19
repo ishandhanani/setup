@@ -49,7 +49,7 @@ export PATH=$PATH:$HOME/go/bin
 # Git aliases
 alias gpr="git pull --rebase"
 alias ga="git add"
-alias gc="git commit -m"
+alias gc="git commit"
 alias gps="git push"
 alias gs="git status"
 alias gpl="git pull"
@@ -80,5 +80,5 @@ alias ls='eza --color=always --group-directories-first'
 alias ll='eza -la --color=always --group-directories-first'
 alias ltree='eza --tree --level=3 --color=always' # Tree view
 
-# Display public IP on shell start, in light grey
-printf "\033[38;2;235;219;178m%s\033[0m\n" "$(curl -s icanhazip.com)"
+# ip util
+alias myip="curl -s icanhazip.com"

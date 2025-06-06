@@ -16,6 +16,11 @@ local c_default_text="#ebdbb2"  # Default Text
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
+# Load edit-cmd-line
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+
 # Define the git part of the prompt (branch name in parentheses)
 zstyle ':vcs_info:git:*' formats " %F{$c_git_branch}(%b)%f"
 setopt PROMPT_SUBST

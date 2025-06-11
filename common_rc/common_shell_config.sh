@@ -32,7 +32,7 @@ alias cat="bat --style=plain"
 
 # ai 
 alias ai="cgpt"
-alias qq="cgpt -no-history"
+alias qq="cgpt --no-history"
 
 # brev
 alias brs="brev refresh && brev ls"

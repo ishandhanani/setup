@@ -12,21 +12,10 @@ local c_git_branch="#b8bb26"    # Green
 local c_prompt_symbol="#fe8019" # Orange
 local c_default_text="#ebdbb2"  # Default Text
 
-# Load vcs_info (for git integration)
-autoload -Uz vcs_info
-precmd() { vcs_info }
-
 # Load edit-cmd-line
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^X^E' edit-command-line
-
-# Define the git part of the prompt (branch name in parentheses)
-zstyle ':vcs_info:git:*' formats " %F{$c_git_branch}(%b)%f"
-setopt PROMPT_SUBST
-
-# PS1 Structure: user@host:path (git_branch) $
-PS1='%F{$c_user}%n%f%F{$c_at}@%f%F{$c_host}%m%f%F{$c_colon}:%f%F{$c_path}%~%f${vcs_info_msg_0_}%F{$c_default_text} %F{$c_prompt_symbol}\$ %f'
 
 # Add colors to ls output (macOS/BSD ls)
 export CLICOLOR=1
@@ -35,10 +24,6 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 # Zsh specific aliases
 alias editz="vim ~/.zshrc"
 alias sourcez="source ~/.zshrc"
-
-# macOS specific aliases & settings
-# alias speed="speedtest" # Moved to common as it's not strictly macOS specific tool name
-# alias m="make" # Already in common
 
 # nav (macOS specific paths)
 alias godesk="cd /Users/$ME/Desktop"
@@ -123,6 +108,15 @@ EOF
   # 6) output only the AI response
   printf "%s\n" "$pr_content"
 }
+
+# ip util
+alias myip="curl -s icanhazip.com"
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+eval "$(starship init zsh)"
 
 # --- Common Shell Configuration ---
 # Common Shell Configuration (for both Bash and Zsh)

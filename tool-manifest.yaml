@@ -149,5 +149,5 @@ tools:
     description: "sick iterm2 fonts"
     macos:
       enabled: true
-      check_command: "echo hello"
+      check_command: "brew info font-hack-nerd-font"
       install_command: "brew install font-hack-nerd-font"
